@@ -85,6 +85,71 @@
 	</div>
 	<script>
 	  // your solution here
+    let e1 = document.getElementById('rotate-box');
+    let rotate = new Hammer(e1);
+    rotate.get('rotate').set({enable:true});
+    rotate.on("rotate", (f) => {
+      $('#rotate-box').css('transform', 'rotate(' + f.rotation + 'deg)');
+    });
+    
+    let e2 = document.getElementById('pinch-box');
+    let pinch = new Hammer(e2);
+    pinch.get('pinch').set({enable:true});
+    pinch.on("pinch", (f) => {
+      $('#pinch-box').css('transform', 'scale3d(' + f.scale + ', ' + f.scale + ', 1)');
+    });
+    
+    let e3 = document.getElementById('press-box');
+    let press = new Hammer(e3);
+    press.get('press').set({
+      time: 500,
+      pointer:1,
+      threshold:10
+    });
+    press.on("press", (f) => {
+      alert("Pressed for 1/2 second");
+    });
+    
+    let e4 = document.getElementById('pan-box');
+    let pan = new Hammer(e4);
+    pan.get('pan').set({
+      direction: Hammer.DIRECTION_ALL, 
+      threshold: 0
+    });
+    pan.on("pan", (f) => {
+      $('#pan-box').css('transform', 'translate(' + f.deltaX + 'px, ' + f.deltaY + 'px)');
+    });
+    
+    let e5 = document.getElementById('tap-box');
+    let tap = new Hammer(e5);
+    tap.get('tap').set({
+      time: 300, 
+      threshold: 10
+    });
+    tap.on("tap", (f) => {
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      $('#tap-box').css("background-color", getRandomColor());
+    });
+    
+    let e6 = document.getElementById('swipe-box');
+    let swipe = new Hammer(e6);
+    swipe.get('swipe').set({
+      direction: Hammer.DIRECTION_ALL, 
+      threshold: 10,
+      velocity: 0.5
+    });
+    swipe.on("swipe", (f) => {
+//       alert(f.velocityX);
+      $('#swipe-box').css('transform', 'translate(' + f.velocityX*50 + 'px, ' + f.velocityY*10 + 'px)');
+    });
+    
   </script>
 </body>
 </html>
